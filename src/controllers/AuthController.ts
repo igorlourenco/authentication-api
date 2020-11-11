@@ -17,8 +17,10 @@ export default {
 
         const isPasswordMatching = await bcrypt.compare(password, user.password);
 
+        const {id} = user
+
         if (isPasswordMatching) {
-            const token = jwt.sign({ user } , secret, {
+            const token = jwt.sign({ id } , secret, {
                 expiresIn: 300 // 5min
             })
 

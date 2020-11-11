@@ -1,6 +1,7 @@
 import {NextFunction, Request, Response} from "express"
 import jwt from "jsonwebtoken"
 
+
 export default {
     isAuthenticated (request: Request, response: Response, next: NextFunction) {
         const authHeader = request.headers.authorization;
@@ -12,6 +13,7 @@ export default {
                 if (err) {
                     return response.sendStatus(403);
                 }
+                request.user = user
                 next();
             });
         } else {
