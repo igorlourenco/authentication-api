@@ -7,9 +7,8 @@ import jwt from "jsonwebtoken"
 export default {
     async login(request: Request, response: Response){
         const {email, password} = request.body;
-        const secret = "meu-segredo";
+        const secret = process.env.JWT_SECRET || "";
         const usersRepository = getRepository(User);
-
         const user = await usersRepository.findOneOrFail({email});
 
         if (!user){
