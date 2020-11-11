@@ -12,12 +12,14 @@ export default {
 
         const user = await usersRepository.findOneOrFail({email});
 
+        if (!user){
+            return response.status(404).json({message: "Usuário não encontrado."})
+        }
+
         const isPasswordMatching = await bcrypt.compare(password, user.password);
 
-        const {id} = user
-
         if (isPasswordMatching) {
-            const token = jwt.sign({ id } , secret, {
+            const token = jwt.sign({ user } , secret, {
                 expiresIn: 300 // 5min
             })
 
