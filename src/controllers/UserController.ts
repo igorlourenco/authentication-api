@@ -31,12 +31,12 @@ export default {
     },
 
     async show(request: Request, response: Response) {
-        const {id} = request.params;
+        const {user} = request
 
         const usersRepository = getRepository(User);
 
-        const user = await usersRepository.findOneOrFail(id);
+        const userData = await usersRepository.findOneOrFail({id: user.id});
 
-        return response.json(UserView.render(user));
+        return response.json(UserView.render(userData));
     },
 }
